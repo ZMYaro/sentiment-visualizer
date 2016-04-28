@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+		<script>
+			var canvas;
+			var textbox;
+			var button;
+			
+			function defineElements() {
+				canvas = document.getElementById("output").getContext("2d");
+				textbox = document.getElementById("input_box");
+				button = document.getElementById("submit")[0];
+			}
+			
+			function gradientColor(sentiment) {
+				p = (sentiment + 1.0) / 2.0;
+				
+				var colorOut = "rgb(" + Math.round(255*p) + ",0," + Math.round(255*(1-p)) + ")";
+				console.log(colorOut);
+				return colorOut;
+			}
+			
+			function writeText(){
+				var string = textbox.value;
+				
+				clear();
+				canvas.font = "24px Arial";
+				canvas.fillStyle = gradientColor(Math.random());
+				canvas.fillText(string, 10,34);
+			}
+			
+			function clear() {
+				color = canvas.fillStyle;
+				canvas.fillStyle = "#ffffff";
+				canvas.fillRect(0,0,document.getElementById("output").width, document.getElementById("output").height);
+				
+				//reset color
+				canvas.fillStyle = color;
+			}
+		</script>
+	</head>
+	<body>
+		<canvas id="output" width="640" height="480">
+		</canvas>
+		<br />
+		<textarea name="input_box" id="input_box" rows="10" cols="30">Enter your text here.
+		</textarea>
+		<br />
+		<button id="submit" onclick="writeText()">Visualize!</button>
+		<script>
+			defineElements();
+		</script>
+	</body>
+</html>
