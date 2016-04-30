@@ -19,10 +19,12 @@ def main_page():
 
 @app.route("/api", methods=['POST'])
 def sentiment_api():
-	#text = get_text(request)
-	#blob = TextBlob(text)
-	#sentences = [{"sentence": unicode(s), "sentiment": s.sentiment[0]} for s in blob.sentences]
-	json_out = json.dumps([{"text":"This is the first sentence.","sentiment":1},{"text":"This is the second sentence.","sentiment":0.1},{"text":"This is the final sentence","sentiment":-1}])
+	text = get_text(request)
+	blob = TextBlob(text)
+	json_out = []
+	for sentence in blob.sentences:
+		json_out.append({'text': unicode(sentence), 'sentiment': sentence.sentiment[0]})
+	json_out = json.dumps(json_out)
 	resp = make_response(json_out)
 	resp.headers['Content-Type'] = 'application/json'
 	return resp
