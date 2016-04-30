@@ -3,14 +3,55 @@
 	<head>
 		<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 		<script>
-			var canvas;
-			var textbox;
-			var button;
+			var API_URL = '/api';
 			
-			function defineElements() {
-				canvas = document.getElementById("output").getContext("2d");
-				textbox = document.getElementById("input_box");
-				button = document.getElementById("submit")[0];
+			var canvas,
+				ctx,
+				inputForm;
+			
+			window.onload = function () {
+				canvas = document.getElementById("output");
+				ctx = canvas.getContext("2d");
+				inputForm = document.getElementById("inputForm");
+				inputForm.onsubmit = processText;
+			};
+			
+			function processText(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				
+				var text = e.target.inputBox.value,
+					xhr = new XMLHttpRequest();
+				xhr.open('POST', API_URL, true);
+				xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4) {
+						if (xhr.status === 200) {
+							var sentences = [];
+							try {
+								sentences = JSON.parse(xhr.responseText);
+							} catch (ex) {
+								handleError();
+							}
+							dispSentences(sentences);
+						} else {
+							handleError();
+						}
+					}
+				};
+				xhr.send('text=' + encodeURIComponent(text));
+				
+			}
+			
+			function handleError() {
+				// TODO: Do something more user-friendly.
+				alert('Something went wrong!');
+			}
+			
+			function dispSentences(sentences) {
+				sentences.forEach(function (sentence) {
+					writeText(sentence.text);
+				});
 			}
 			
 			function gradientColor(sentiment) {
@@ -21,22 +62,20 @@
 				return colorOut;
 			}
 			
-			function writeText(){
-				var string = textbox.value;
-				
+			function writeText(string){
 				clear();
-				canvas.font = "24px Arial";
-				canvas.fillStyle = gradientColor(Math.random());
-				canvas.fillText(string, 10,34);
+				ctx.font = "24px Arial";
+				ctx.fillStyle = gradientColor(Math.random());
+				ctx.fillText(string, 10,34);
 			}
 			
 			function clear() {
 				color = canvas.fillStyle;
-				canvas.fillStyle = "#ffffff";
-				canvas.fillRect(0,0,document.getElementById("output").width, document.getElementById("output").height);
+				ctx.fillStyle = "#ffffff";
+				ctx.fillRect(0,0,document.getElementById("output").width, document.getElementById("output").height);
 				
 				//reset color
-				canvas.fillStyle = color;
+				ctx.fillStyle = color;
 			}
 		</script>
 	</head>
@@ -44,12 +83,11 @@
 		<canvas id="output" width="640" height="480">
 		</canvas>
 		<br />
-		<textarea name="input_box" id="input_box" rows="10" cols="30">Enter your text here.
-		</textarea>
-		<br />
-		<button id="submit" onclick="writeText()">Visualize!</button>
-		<script>
-			defineElements();
-		</script>
+		<form id="inputForm" method="POST">
+			<textarea name="inputBox" rows="10" cols="30">Enter your text here.
+			</textarea>
+			<br />
+			<button type="submit">Visualize!</button>
+		</form>
 	</body>
 </html>
