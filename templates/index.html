@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
-		<script>
+		<script type="text/javascript" src='https://code.responsivevoice.org/responsivevoice.js'></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
+		<script type="text/javascript">
 			var API_URL = '/api';
 			
-			var canvas,
-				ctx,
-				inputForm;
+			var outputTxt,
+				inputForm,
+				vis,
+				sentences;
 			
 			window.onload = function () {
-				canvas = document.getElementById("output");
-				ctx = canvas.getContext("2d");
+				sentences = [];
+				
 				inputForm = document.getElementById("inputForm");
 				inputForm.onsubmit = processText;
+				
+				outputTxt = document.getElementById('outputTxt');
+				
+				vis = new Vis(document.getElementById('canvas'));
 			};
 			
 			function processText(e) {
@@ -27,13 +34,16 @@
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState === 4) {
 						if (xhr.status === 200) {
-							var sentences = [];
+							var newSentences = [];
 							try {
-								sentences = JSON.parse(xhr.responseText);
+								newSentences = JSON.parse(xhr.responseText);
 							} catch (ex) {
 								handleError();
 							}
-							dispSentences(sentences);
+							newSentences.forEach(function (newSentence) {
+								sentences.push(newSentence);
+							});
+							dispNextSentence();
 						} else {
 							handleError();
 						}
@@ -48,40 +58,29 @@
 				alert('Something went wrong!');
 			}
 			
-			function dispSentences(sentences) {
-				sentences.forEach(function (sentence) {
-					writeText(sentence.text);
-				});
-			}
-			
-			function gradientColor(sentiment) {
-				p = (sentiment + 1.0) / 2.0;
+			function dispNextSentence() {
+				// Get the sentence at the front of the queue.
+				var sentence = sentences.shift(),
+					sentiment = sentence.sentiment * 0.5 + 0.5;
 				
-				var colorOut = "rgb(" + Math.round(255*p) + ",0," + Math.round(255*(1-p)) + ")";
-				console.log(colorOut);
-				return colorOut;
-			}
-			
-			function writeText(string){
-				clear();
-				ctx.font = "24px Arial";
-				ctx.fillStyle = gradientColor(Math.random());
-				ctx.fillText(string, 10,34);
-			}
-			
-			function clear() {
-				color = canvas.fillStyle;
-				ctx.fillStyle = "#ffffff";
-				ctx.fillRect(0,0,document.getElementById("output").width, document.getElementById("output").height);
+				dispText(sentence.text + ' (' + Math.round(sentiment * 100) + '%)');
+				vis.addColor(new Color(255 * (1 - sentiment), 0, 255 * sentiment));
 				
-				//reset color
-				ctx.fillStyle = color;
+				// TODO: Add voice synth and load next sentence after previous sentence is read.
+				if (sentences.length > 0) {
+					setTimeout(dispNextSentence, 3000);
+				}
+			}
+			
+			function dispText(sentence){
+				outputTxt.innerText = outputTxt.textContent = sentence;
 			}
 		</script>
 	</head>
 	<body>
-		<canvas id="output" width="640" height="480">
+		<canvas id="canvas" width="640" height="480">
 		</canvas>
+		<div id="outputTxt"></div>
 		<br />
 		<form id="inputForm" method="POST">
 			<textarea name="inputBox" rows="10" cols="30">Enter your text here.
