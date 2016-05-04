@@ -76,7 +76,7 @@
 					polarity = sentence.polarity * 0.5 + 0.5,
 					subjectivity = sentence.subjectivity;
 				
-				dispText(sentence.text + ' (' + Math.round(polarity * 100) + '%, ' + Math.round(subjectivity * 100) + '%)');
+				dispText(sentence.text + ' (' + Math.round(polarity * 100) + '%)');
 				vis.setColorFeed(polarity, subjectivity);
 				
 				// Start TTS and load next sentence after previous sentence is read.
