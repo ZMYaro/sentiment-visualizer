@@ -5,7 +5,8 @@
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
 		<script type="text/javascript">
-			var API_URL = '/api';
+			var API_URL = '/api',
+				VOICE = 'US English Female';
 			
 			var outputTxt,
 				inputForm,
@@ -13,6 +14,7 @@
 				sentences;
 			
 			window.onload = function () {
+				// Initialize sentence queue.
 				sentences = [];
 				
 				inputForm = document.getElementById("inputForm");
@@ -20,7 +22,11 @@
 				
 				outputTxt = document.getElementById('outputTxt');
 				
+				// Initialize visualizer.
 				vis = new Vis(document.getElementById('canvas'));
+				
+				// Initialize TTS.
+				responsiveVoice.setDefaultVoice(VOICE);
 			};
 			
 			function processText(e) {
@@ -67,22 +73,15 @@
 				vis.addColor(new Color(255 * (1 - sentiment), 0, 255 * sentiment));
 				
 				// TODO: Add voice synth and load next sentence after previous sentence is read.
-				responsiveVoice.speak(sentence);
+				responsiveVoice.speak(sentence.text);
 				
 				if (sentences.length > 0) {
 					setTimeout(dispNextSentence, 3000);
 				}
 			}
 			
-			function dispText(sentence){
+			function dispText(sentence) {
 				outputTxt.innerText = outputTxt.textContent = sentence;
-			}
-			
-			function speakBox() {
-				var box = document.getElementById("inputBox");
-				var txt = box.value;
-				console.log(txt);
-				responsiveVoice.speak(txt);
 			}
 		</script>
 	</head>
@@ -92,14 +91,9 @@
 		<div id="outputTxt"></div>
 		<br />
 		<form id="inputForm" method="POST">
-			<textarea id="inputBox" name="inputBox" rows="10" cols="30">Enter your text here.
-			</textarea>
+			<textarea name="inputBox" rows="10" cols="72" autofocus="autofocus">Enter your text here.</textarea>
 			<br />
-			<button type="submit" onclick="speakBox()">Visualize!</button>
+			<button type="submit">Visualize</button>
 		</form>
-		<script type="text/javascript">
-			responsiveVoice.setDefaultVoice("US English Female");
-			responsiveVoice.speak("Welcome!");
-		</script>
 	</body>
 </html>
