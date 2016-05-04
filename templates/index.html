@@ -65,17 +65,22 @@
 			}
 			
 			function dispNextSentence() {
+				if (sentences.length === 0) {
+					vis.clearColorFeed()
+					return;
+				}
 				// Get the sentence at the front of the queue.
 				var sentence = sentences.shift(),
-					sentiment = sentence.sentiment * 0.5 + 0.5;
+					polarity = sentence.polarity * 0.5 + 0.5,
+					subjectivity = sentence.subjectivity;
 				
-				dispText(sentence.text + ' (' + Math.round(sentiment * 100) + '%)');
-				vis.addColor(new Color(255 * (1 - sentiment), 0, 255 * sentiment));
+				dispText(sentence.text + ' (' + Math.round(polarity * 100) + '%, ' + Math.round(subjectivity * 100) + '%)');
+				vis.setColorFeed(polarity, subjectivity);
 				
-				// TODO: Add voice synth and load next sentence after previous sentence is read.
-				responsiveVoice.speak(sentence.text);
-				
-				if (sentences.length > 0) {
+				// Start TTS and load next sentence after previous sentence is read.
+				if (responsiveVoice.voiceSupport()) {
+					responsiveVoice.speak(sentence.text, VOICE, { onend: dispNextSentence });
+				} else {
 					setTimeout(dispNextSentence, 3000);
 				}
 			}
@@ -86,7 +91,7 @@
 		</script>
 	</head>
 	<body>
-		<canvas id="canvas" width="640" height="480">
+		<canvas id="canvas" width="640" height="240">
 		</canvas>
 		<div id="outputTxt"></div>
 		<br />

@@ -23,7 +23,7 @@ def sentiment_api():
 	blob = TextBlob(text)
 	json_out = []
 	for sentence in blob.sentences:
-		json_out.append({'text': unicode(sentence), 'sentiment': sentence.sentiment[0]})
+		json_out.append({'text': unicode(sentence), 'polarity': sentence.sentiment[0], 'subjectivity': sentence.sentiment[1]})
 	json_out = json.dumps(json_out)
 	resp = make_response(json_out)
 	resp.headers['Content-Type'] = 'application/json'

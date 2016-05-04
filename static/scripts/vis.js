@@ -1,6 +1,7 @@
 function Vis(canvas) {
 	this._canvas = canvas;
 	this._ctx = canvas.getContext('2d');
+	this._colorFeed = undefined;
 	
 	// Initialize the color grid.
 	this.grid = new Array(Vis.GRID_HEIGHT);
@@ -18,11 +19,11 @@ function Vis(canvas) {
 }
 
 Vis.GRID_WIDTH = 64;
-Vis.GRID_HEIGHT = 48;
+Vis.GRID_HEIGHT = 24;
 Vis.STEP_TIME = 500; // Milliseconds
 Vis.CURRENT_COLOR_WEIGHT = 0.3;
 Vis.OTHER_COLOR_WEIGHT = 0.7;
-Vis.DEFAULT_COLOR = new Color(96, 0, 96);
+Vis.DEFAULT_COLOR = new Color(32, 0, 32);
 
 Vis.prototype = {
 	/**
@@ -72,6 +73,14 @@ Vis.prototype = {
 	},
 	
 	_updateGrid: function () {
+		if (this._colorFeed) {
+			for (var r = this._colorFeed.row - 2; r <= this._colorFeed.row + 2; r++) {
+				for (var c = this._colorFeed.col - 2; c <= this._colorFeed.col + 2; c++) {
+					this.grid[r][c] = this._colorFeed.color;
+				}
+			}
+		}
+		
 		var newGrid = new Array(Vis.GRID_HEIGHT);
 		for (var r = 0; r < this.grid.length; r++) {
 			newGrid[r] = new Array(Vis.GRID_WIDTH);
@@ -96,16 +105,23 @@ Vis.prototype = {
 	
 	/**
 	 * Add a splash of color in the center of the grid.
-	 * @param {Color} color - The color to be added
+	 * @param {Number} polarity
+	 * @param {Number} subjectivity
 	 */
-	addColor: function (color) {
-		var centerRow = Math.round(Vis.GRID_HEIGHT / 2),
-			centerCol = Math.round(Vis.GRID_WIDTH / 2);
-		for (var r = centerRow - 4; r <= centerRow + 4; r++) {
-			for (var c = centerCol - 4; c <= centerCol + 4; c++) {
-				this.grid[r][c] = color;
-			}
-		}
+	setColorFeed: function (polarity, subjectivity) {
+		this._colorFeed = {
+			row: Math.round(Vis.GRID_HEIGHT / 2),
+			col: Math.max(2, Math.min(Vis.GRID_WIDTH - 3, Math.round(subjectivity * Vis.GRID_WIDTH))),
+			color: new Color(255 * (1 - polarity), 20 + 100 * polarity, 255 * polarity)
+		};
+		console.log(this._colorFeed);
+	},
+	
+	/**
+	 * Remove the color feed.
+	 */
+	clearColorFeed: function () {
+		this._colorFeed = undefined;
 	},
 	
 	update: function () {
