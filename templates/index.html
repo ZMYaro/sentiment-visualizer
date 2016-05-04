@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Sentiment Visualizer</title>
+		
 		<script type="text/javascript" src='https://code.responsivevoice.org/responsivevoice.js'></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
@@ -89,8 +91,14 @@
 				outputTxt.innerText = outputTxt.textContent = sentence;
 			}
 		</script>
+		<style type="text/css">
+			body {
+				font-family: sans-serif;
+			}
+		</style>
 	</head>
 	<body>
+		<h1>Sentiment Visualizer</h1>
 		<canvas id="canvas" width="640" height="240">
 		</canvas>
 		<div id="outputTxt"></div>
@@ -98,7 +106,7 @@
 		<form id="inputForm" method="POST">
 			<textarea name="inputBox" rows="10" cols="72" autofocus="autofocus">Enter your text here.</textarea>
 			<br />
-			<button type="submit">Visualize</button>
+			<button type="submit" style="font-size: larger;">Visualize</button>
 		</form>
 	</body>
 </html>
