@@ -49,7 +49,7 @@
 						}
 					}
 				};
-				xhr.send('text=' + encodeURIComponent(text));
+				//xhr.send('text=' + encodeURIComponent(text));
 				
 			}
 			
@@ -67,6 +67,8 @@
 				vis.addColor(new Color(255 * (1 - sentiment), 0, 255 * sentiment));
 				
 				// TODO: Add voice synth and load next sentence after previous sentence is read.
+				responsiveVoice.speak(sentence);
+				
 				if (sentences.length > 0) {
 					setTimeout(dispNextSentence, 3000);
 				}
@@ -74,6 +76,13 @@
 			
 			function dispText(sentence){
 				outputTxt.innerText = outputTxt.textContent = sentence;
+			}
+			
+			function speakBox() {
+				var box = document.getElementById("inputBox");
+				var txt = box.value;
+				console.log(txt);
+				responsiveVoice.speak(txt);
 			}
 		</script>
 	</head>
@@ -83,10 +92,14 @@
 		<div id="outputTxt"></div>
 		<br />
 		<form id="inputForm" method="POST">
-			<textarea name="inputBox" rows="10" cols="30">Enter your text here.
+			<textarea id="inputBox" name="inputBox" rows="10" cols="30">Enter your text here.
 			</textarea>
 			<br />
-			<button type="submit">Visualize!</button>
+			<button type="submit" onclick="speakBox()">Visualize!</button>
 		</form>
+		<script type="text/javascript">
+			responsiveVoice.setDefaultVoice("US English Female");
+			responsiveVoice.speak("Welcome!");
+		</script>
 	</body>
 </html>
