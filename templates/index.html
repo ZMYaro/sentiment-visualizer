@@ -3,6 +3,27 @@
 	<head>
 		<title>Sentiment Visualizer</title>
 		
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-elements.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-widgets.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-depth.css') }}" />
+		<style type="text/css">
+			body {
+				background-color: #e8e8e8;
+			}
+			section,
+			section.card {
+				display: block;
+				margin: 0 auto 16px;
+				max-width: 680px;
+			}
+			textarea {
+				width: 100%;
+				-webkit-box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+				        box-sizing: border-box;
+			}
+		</style>
+		
 		<script type="text/javascript" src='https://code.responsivevoice.org/responsivevoice.js'></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
@@ -91,22 +112,21 @@
 				outputTxt.innerText = outputTxt.textContent = sentence;
 			}
 		</script>
-		<style type="text/css">
-			body {
-				font-family: sans-serif;
-			}
-		</style>
 	</head>
 	<body>
-		<h1>Sentiment Visualizer</h1>
-		<canvas id="canvas" width="640" height="240">
-		</canvas>
-		<div id="outputTxt"></div>
-		<br />
-		<form id="inputForm" method="POST">
-			<textarea name="inputBox" rows="10" cols="72" autofocus="autofocus">Enter your text here.</textarea>
-			<br />
-			<button type="submit" style="font-size: larger;">Visualize</button>
-		</form>
+		<header class="appBar z2">Sentiment Visualizer</header>
+		<section class="card z2" style="text-align: center;">
+			<canvas id="canvas" width="640" height="240">
+			</canvas>
+			<div id="outputTxt">Enter your text below.</div>
+		</section>
+		<section class="card z2">
+			<form id="inputForm" method="POST">
+				<textarea name="inputBox" rows="10" placeholder="Enter your text here." autofocus="autofocus"></textarea>
+				<div style="text-align: right;">
+					<button type="submit" class="z1" style="font-size: larger;">Visualize</button>
+				</div>
+			</form>
+		</section>
 	</body>
 </html>
