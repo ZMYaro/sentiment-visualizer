@@ -25,11 +25,10 @@ function Vis3D(container, textureCanvas) {
 		geometry,
 		new THREE.MeshBasicMaterial( { color: 0x000000 } ));
 	this._mesh.rotation.x = -Math.PI / 4;
-	this._mesh.position.y = -10;
 	this._scene.add(this._mesh);
 	
 	this._camera = new THREE.PerspectiveCamera(75, textureCanvas.width / textureCanvas.height, 0.1, 1000);
-	this._camera.position.y = -50;
+	this._camera.position.y = -10;
 	this._camera.position.z = 150;
 	this._scene.add(this._camera);
 	
