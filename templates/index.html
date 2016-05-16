@@ -13,8 +13,13 @@
 			section,
 			section.card {
 				display: block;
+				position: relative;
 				margin: 0 auto 16px;
 				max-width: 680px;
+				
+				-webkit-box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+				        box-sizing: border-box;
 			}
 			textarea {
 				width: 100%;
@@ -22,11 +27,27 @@
 				   -moz-box-sizing: border-box;
 				        box-sizing: border-box;
 			}
+			#canvas,
+			#vis3dContainer,
+			#vis3dContainer > canvas {
+				max-width: 100%;
+				-webkit-box-sizing: border-box;
+				   -moz-box-sizing: border-box;
+				        box-sizing: border-box;
+			}
+				#vis3dContainer {
+					display: none;
+					position: absolute;
+					left: 16px;
+					top: 16px;
+				}
 		</style>
 		
 		<script type="text/javascript" src='https://code.responsivevoice.org/responsivevoice.js'></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts/three.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis3d.js') }}"></script>
 		<script type="text/javascript">
 			var API_URL = '/api',
 				VOICE = 'US English Female';
@@ -34,6 +55,7 @@
 			var outputTxt,
 				inputForm,
 				vis,
+				vis3d,
 				sentences;
 			
 			window.onload = function () {
@@ -47,6 +69,7 @@
 				
 				// Initialize visualizer.
 				vis = new Vis(document.getElementById('canvas'));
+				vis3d = new Vis3D(document.getElementById('vis3dContainer'), document.getElementById('canvas'));
 				
 				// Initialize TTS.
 				responsiveVoice.setDefaultVoice(VOICE);
@@ -94,11 +117,11 @@
 				}
 				// Get the sentence at the front of the queue.
 				var sentence = sentences.shift(),
-					polarity = sentence.polarity * 0.5 + 0.5,
-					subjectivity = sentence.subjectivity;
+					normalizedPolarity = sentence.polarity * 0.5 + 0.5;
 				
-				dispText(sentence.text + ' (' + Math.round(polarity * 100) + '%)');
-				vis.setColorFeed(polarity, subjectivity);
+				dispText(sentence.text + ' (' + Math.round(sentence.polarity * 100) + '%)');
+				vis.setColorFeed(normalizedPolarity, sentence.subjectivity);
+				vis3d.setTerrainFeed(sentence.polarity, sentence.subjectivity);
 				
 				// Start TTS and load next sentence after previous sentence is read.
 				if (responsiveVoice.voiceSupport()) {
@@ -118,6 +141,7 @@
 		<section class="card z2" style="text-align: center;">
 			<canvas id="canvas" width="640" height="240">
 			</canvas>
+			<div id="vis3dContainer"></div>
 			<div id="outputTxt">Enter your text below.</div>
 		</section>
 		<section class="card z2">
