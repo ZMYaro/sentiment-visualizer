@@ -80,6 +80,7 @@
 				
 				document.getElementById('show3d').onchange = function () {
 					document.getElementById('vis3dContainer').style.display = this.checked ? 'block' : 'none';
+					document.getElementById('wireframe').disabled = !this.checked;
 				};
 				document.getElementById('wireframe').onchange = function () {
 					vis3d.wireframe = this.checked;
