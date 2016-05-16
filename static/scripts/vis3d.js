@@ -3,7 +3,8 @@
 function Vis3D(container, textureCanvas) {
 	// Store references to the 2D visualizer.
 	this._textureCanvas = textureCanvas;
-	this._textureCtx = textureCanvas.getContext('2d');
+	this._textureLoader = new THREE.TextureLoader();
+	this.wireframe = false;
 	
 	// Initialize the three.js scene.
 	this._scene = new THREE.Scene();
@@ -111,16 +112,29 @@ Vis3D.prototype = {
 	},
 	
 	_updateCanvas: function () {
+		// Update terrain.
 		for (var i = 0; i < this._mesh.geometry.vertices.length; i++) {
 			var row = Math.floor(i / Vis3D.GRID_WIDTH),
 				col = i - (row * Vis3D.GRID_WIDTH);
 			this._mesh.geometry.vertices[i].z = this.grid[row][col] * Vis3D.MAX_HEIGHT;
-			console.log(row + ',' + col + ' | ' + this.grid[row][col] + ' => ' + this._mesh.geometry.vertices[i].z);
 		}
 		this._mesh.geometry.__dirtyVertices = true;
 		this._mesh.geometry.computeFaceNormals();
 		this._mesh.geometry.computeVertexNormals();
 		this._mesh.geometry.verticesNeedUpdate = true;
+		
+		// Update texture.
+		var that = this;
+		this._textureLoader.load(
+			this._textureCanvas.toDataURL(),
+			function (texture) {
+				that._mesh.material = new THREE.MeshBasicMaterial({
+					map: texture,
+					wireframe: that.wireframe
+				});
+			}
+		);
+		
 		
 		this._renderer.render(this._scene, this._camera);
 	},
