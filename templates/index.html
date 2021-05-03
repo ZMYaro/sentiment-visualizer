@@ -10,13 +10,18 @@
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-elements.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-widgets.css') }}" />
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-depth.css') }}" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/material-dark.css') }}" media="(prefers-color-scheme: dark)" />
 		<style type="text/css">
 			body {
 				background-color: #e8e8e8;
 			}
+			@media (prefers-color-scheme: dark) {
+				body {
+					background-color: #121212;
+				}
+			}
 			section,
 			section.card {
-				display: block;
 				position: relative;
 				margin: 0 auto 16px;
 				max-width: 680px;
@@ -55,6 +60,7 @@
 		</style>
 		
 		<script type="text/javascript" src='https://code.responsivevoice.org/responsivevoice.js'></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='scripts/material-touch.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/three.min.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/color.js') }}"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='scripts/vis.js') }}"></script>
@@ -157,7 +163,7 @@
 	</head>
 	<body>
 		<header class="appBar z2">SentimentViZ</header>
-		<section class="card z2" style="text-align: center;">
+		<section class="card full-width z2" style="text-align: center;">
 			<canvas id="canvas" width="640" height="240">
 			</canvas>
 			<div id="vis3dContainer"></div>
@@ -173,7 +179,7 @@
 			</p>
 			<div id="outputTxt">Enter your text below.</div>
 		</section>
-		<section class="card z2">
+		<section class="card full-width z2">
 			<form id="inputForm" method="POST">
 				<textarea name="inputBox" rows="10" placeholder="Enter your text here." autofocus="autofocus"></textarea>
 				<div style="text-align: right;">
@@ -181,13 +187,13 @@
 				</div>
 			</form>
 		</section>
-		<section class="card z1">
+		<section class="card full-width z1">
 			<h2 style="margin-top: 0.5em;">About</h2>
 			<p>
 				Any text you enter will be analyzed sentence by sentence for positive and negative sentiments, which will bleed into the visualization and blue and red spots, respectively.  The more subjective each sentence is, the farther right it will appear in the visualization.
 			</p>
 		</section>
-		<section class="card z1">
+		<section class="card full-width z1">
 			<h2 style="margin-top: 0.5em;">Credits</h2>
 			<p>
 				Created by <a href="https://zmyaro.com" target="_blank">Zachary Yaro</a> with <a href="http://www.jfoxcanning.com" target="_blank">Jamie Fox-Canning</a>.

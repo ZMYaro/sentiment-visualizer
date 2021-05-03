@@ -1,9 +1,9 @@
 /* Base Material styles for depth
  * Part of the MaterialZ CSS library
  *
- * Copyright 2015 Zachary Yaro
+ * Copyright 2015-2021 Zachary Yaro
  * Released under the MIT license
- * http://materialz.zmyaro.com/LICENSE.txt
+ * https://materialz.dev/LICENSE.txt
  */
 
 @charset "UTF-8";
@@ -29,16 +29,27 @@
 	     -o-transition-property: box-shadow;
 	        transition-property: box-shadow;
 }
+.card.full-width.z1,
+.card.full-width.z2,
+.card.full-width.z3,
+.card.full-width.z4,
+.card.full-width.z5 {
+	-webkit-transition-property: margin, border-radius, -webkit-box-shadow, box-shadow;
+	   -moz-transition-property: margin, border-radius, -moz-box-shadow, box-shadow;
+	    -ms-transition-property: margin, border-radius, box-shadow;
+	     -o-transition-property: margin, border-radius, box-shadow;
+	        transition-property: margin, border-radius, box-shadow;
+}
 button.z1,
 button.z2,
 button.z3,
 button.z4,
 button.z5,
-*[role="button"].z1,
-*[role="button"].z2,
-*[role="button"].z3,
-*[role="button"].z4,
-*[role="button"].z5 ,
+[role="button"].z1,
+[role="button"].z2,
+[role="button"].z3,
+[role="button"].z4,
+[role="button"].z5 ,
 input[type="button"].z1,
 input[type="button"].z2,
 input[type="button"].z3,
@@ -61,11 +72,11 @@ input[type="reset"].z5 {
 	button.z3:hover,
 	button.z4:hover,
 	button.z5:hover,
-	*[role="button"].z1:hover,
-	*[role="button"].z2:hover,
-	*[role="button"].z3:hover,
-	*[role="button"].z4:hover,
-	*[role="button"].z5:hover,
+	[role="button"].z1:hover,
+	[role="button"].z2:hover,
+	[role="button"].z3:hover,
+	[role="button"].z4:hover,
+	[role="button"].z5:hover,
 	input[type="button"].z1:hover,
 	input[type="button"].z2:hover,
 	input[type="button"].z3:hover,
@@ -86,11 +97,11 @@ input[type="reset"].z5 {
 	button.z3:focus,
 	button.z4:focus,
 	button.z5:focus,
-	*[role="button"].z1:focus,
-	*[role="button"].z2:focus,
-	*[role="button"].z3:focus,
-	*[role="button"].z4:focus,
-	*[role="button"].z5:focus,
+	[role="button"].z1:focus,
+	[role="button"].z2:focus,
+	[role="button"].z3:focus,
+	[role="button"].z4:focus,
+	[role="button"].z5:focus,
 	input[type="button"].z1:focus,
 	input[type="button"].z2:focus,
 	input[type="button"].z3:focus,
@@ -113,11 +124,11 @@ input[type="reset"].z5 {
 	button.z3:enabled:active,
 	button.z4:enabled:active,
 	button.z5:enabled:active,
-	*[role="button"].z1:active,
-	*[role="button"].z2:active,
-	*[role="button"].z3:active,
-	*[role="button"].z4:active,
-	*[role="button"].z5:active,
+	[role="button"].z1:active,
+	[role="button"].z2:active,
+	[role="button"].z3:active,
+	[role="button"].z4:active,
+	[role="button"].z5:active,
 	input[type="button"].z1:enabled:active,
 	input[type="button"].z2:enabled:active,
 	input[type="button"].z3:enabled:active,
@@ -138,11 +149,11 @@ input[type="reset"].z5 {
 	button.z3:enabled.active,
 	button.z4:enabled.active,
 	button.z5:enabled.active,
-	*[role="button"].z1.active,
-	*[role="button"].z2.active,
-	*[role="button"].z3.active,
-	*[role="button"].z4.active,
-	*[role="button"].z5.active,
+	[role="button"].z1.active,
+	[role="button"].z2.active,
+	[role="button"].z3.active,
+	[role="button"].z4.active,
+	[role="button"].z5.active,
 	input[type="button"].z1:enabled.active,
 	input[type="button"].z2:enabled.active,
 	input[type="button"].z3:enabled.active,
@@ -165,14 +176,12 @@ input[type="reset"].z5 {
 	-webkit-box-shadow: rgba(0, 0, 0, 0.26) 0 2px 5px 0, rgba(0, 0, 0, 0.16) 0 2px 10px 0;
 	   -moz-box-shadow: rgba(0, 0, 0, 0.26) 0 2px 5px 0, rgba(0, 0, 0, 0.16) 0 2px 10px 0;
 	        box-shadow: rgba(0, 0, 0, 0.26) 0 2px 5px 0, rgba(0, 0, 0, 0.16) 0 2px 10px 0;
-	    filter:  progid:DXImageTransform.Microsoft.Glow(Color=#b8b8b8,Strength=5);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color=#b8b8b8,Strength=5)";
 }
 
 button.z1:hover,
 button.z1:focus,
-*[role="button"].z1:hover,
-*[role="button"].z1:focus,
+[role="button"].z1:hover,
+[role="button"].z1:focus,
 input[type="button"].z1:hover,
 input[type="button"].z1:focus,
 input[type="submit"].z1:hover,
@@ -182,14 +191,12 @@ input[type="reset"].z1:focus {
 	-webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.23), 0 4px 15px 0 rgba(0, 0, 0, 0.175);
 	   -moz-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.23), 0 4px 15px 0 rgba(0, 0, 0, 0.175);
 	        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.23), 0 4px 15px 0 rgba(0, 0, 0, 0.175);
-	    filter:  progid:DXImageTransform.Microsoft.Glow(Color=#b4b4b4,Strength=7);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color=#b4b4b4,Strength=7)";
 }
 .z2,
 button.z1:enabled:active,
 button.z1:enabled.active,
-*[role="button"].z1:active,
-*[role="button"].z1.active,
+[role="button"].z1:active,
+[role="button"].z1.active,
 input[type="button"].z1:active,
 input[type="button"].z1.active,
 input[type="submit"].z1:active,
@@ -199,14 +206,12 @@ input[type="reset"].z1.active {
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 8px 17px 0, rgba(0, 0, 0, 0.19) 0 6px 20px 0;
 	   -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 8px 17px 0, rgba(0, 0, 0, 0.19) 0 6px 20px 0;
 	        box-shadow: rgba(0, 0, 0, 0.2) 0 8px 17px 0, rgba(0, 0, 0, 0.19) 0 6px 20px 0;
-	    filter:  progid:DXImageTransform.Microsoft.Glow(Color=#b0b0b0,Strength=10);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color=#b0b0b0,Strength=10)";
 }
 .z3,
 button.z2:enabled:active,
 button.z2:enabled.active,
-*[role="button"].z2:active,
-*[role="button"].z2.active,
+[role="button"].z2:active,
+[role="button"].z2.active,
 input[type="button"].z2:active,
 input[type="button"].z2.active,
 input[type="submit"].z2:active,
@@ -220,8 +225,8 @@ input[type="reset"].z2.active {
 .z4,
 button.z3:enabled:active,
 button.z3:enabled.active,
-*[role="button"].z3:active,
-*[role="button"].z3.active,
+[role="button"].z3:active,
+[role="button"].z3.active,
 input[type="button"].z3:active,
 input[type="button"].z3.active,
 input[type="submit"].z3:active,
@@ -235,8 +240,8 @@ input[type="reset"].z3.active {
 .z5,
 button.z4:enabled:active,
 button.z4:enabled.active,
-*[role="button"].z4:active,
-*[role="button"].z4.active,
+[role="button"].z4:active,
+[role="button"].z4.active,
 input[type="button"].z4:active,
 input[type="button"].z4.active,
 input[type="submit"].z4:active,
@@ -248,13 +253,25 @@ input[type="reset"].z4.active {
 	        box-shadow: rgba(0, 0, 0, 0.2) 0 27px 24px 0, rgba(0, 0, 0, 0.22) 0 40px 77px 0;
 }
 button.z1:disabled,
-*[role="button"].z1.disabled,
+[role="button"].z1.disabled,
 input[type="button"].z1.disabled,
 input[type="submit"].z1.disabled,
 input[type="reset"].z1.disabled {
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 2px 0, rgba(0, 0, 0, 0.14) 0 2px 5px 0;
 	   -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 2px 0, rgba(0, 0, 0, 0.14) 0 2px 5px 0;
 	        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 2px 0, rgba(0, 0, 0, 0.14) 0 2px 5px 0;
-	    filter:  progid:DXImageTransform.Microsoft.Glow(Color=#b8b8b8,Strength=5);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Glow(Color=#b8b8b8,Strength=5)";
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.z1,
+	.z2,
+	.z3,
+	.z4,
+	.z5 {
+		-webkit-transition-duration: 0s;
+		   -moz-transition-duration: 0s;
+		    -ms-transition-duration: 0s;
+		     -o-transition-duration: 0s;
+		        transition-duration: 0s;
+	}
 }
