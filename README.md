@@ -7,7 +7,7 @@
 
 ### To run the app:
 
-* `python run.py`
+* `python index.py`
 * Navigate to `http://127.0.0.1:5000`
 
 
